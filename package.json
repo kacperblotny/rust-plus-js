@@ -13,7 +13,18 @@
     "nodemon": "^3.0.3"
   },
   "dependencies": {
+    "@liamcottle/rustplus.js": "^2.4.0",
     "colors": "^1.4.0",
-    "express": "^4.18.2"
+    "config": "^3.3.10",
+    "discord.js": "^14.14.1",
+    "express": "^4.18.2",
+    "google-translate-api": "^2.3.0",
+    "google-translate-api-browser": "^4.2.7"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.json",
+      "public/javascripts/*.js"
+    ]
   }
 }
