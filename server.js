@@ -68,42 +68,6 @@ rustplus.on('message', (msg) => {
         members
       )
       rustplus.sendTeamMessage(returnedMessage)
-      // if (message.includes('.gt')) {
-      //   const splitMessage = message.split(':')
-      //   const result = splitMessage.slice(1).join(':').trim()
-
-      //   translate(result, { to: 'pl' })
-      //     .then((res) => {
-      //       console.log(res.text)
-      //       rustplus.sendTeamMessage(res.text)
-      //     })
-      //     .catch((err) => {
-      //       console.error(err)
-      //     })
-      // }
-      // if (message.includes('.leader')) {
-      //   const splitMessage = message.split(':')
-      //   const result = splitMessage.slice(1).join(':').trim()
-
-      //   const member = members.find((member) => member.name === author)
-      //   // msg.broadcast.teamMessage.message.steamId.toString()
-      //   const steamId = Long.fromBits(
-      //     member.steamId.low,
-      //     member.steamId.high,
-      //     member.steamId.unsigned
-      //   ).toString()
-
-      //   // rustplus.promoteToLeader(steamId)
-      //   // rustplus.sendRequestAsync({
-      //   //   promoteToLeader: {
-      //   //     steamId: steamId,
-      //   //   },
-      //   // })
-      //   console.log(steamId)
-
-      //   console.log(result)
-      //   return result
-      // }
     }
   }
 })
