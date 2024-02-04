@@ -11,9 +11,7 @@ function getRustServerInfo(rustplus) {
           console.error(colors.red('Error saving rust server info:'), err)
         } else {
           console.log(
-            colors.brightBlue(
-              'rust server info has been saved to rust-server-info.json'
-            )
+            colors.brightBlue('rust info saved to rust-server-info.json')
           )
         }
       }

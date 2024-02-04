@@ -11,9 +11,7 @@ function getRustServerTime(rustplus) {
           console.error(colors.red('Error saving rust server time info:'), err)
         } else {
           console.log(
-            colors.brightBlue(
-              'rust server time info has been saved to rust-server-time.json'
-            )
+            colors.brightBlue('rust time saved to rust-server-time.json')
           )
         }
       }

@@ -10,9 +10,7 @@ function getMap(rustplus) {
         if (err) {
           console.error(colors.red('Error saving map info:'), err)
         } else {
-          console.log(
-            colors.brightBlue('map info has been saved to map-info.json')
-          )
+          console.log(colors.brightBlue('map saved to map-info.json'))
         }
       }
     )

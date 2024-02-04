@@ -1,3 +1,5 @@
 node_modules/
 connection-files/
 rust-json-info/
+.env
+config.json
