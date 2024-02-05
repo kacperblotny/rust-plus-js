@@ -2,6 +2,8 @@ const colors = require('colors/safe')
 const { translate } = require('google-translate-api-browser')
 const { vend } = require('./vend.js')
 
+const { calcGrid } = require('./calcGrid.js')
+
 function chatHandler(rustplus, msg, rustServerInfo, rustServerTime, mapInfo) {
   let message = msg.broadcast.teamMessage.message.message
   let author = msg.broadcast.teamMessage.message.name
@@ -81,14 +83,16 @@ function chatHandler(rustplus, msg, rustServerInfo, rustServerTime, mapInfo) {
 
       filteredItems.forEach((vending) => {
         if (vending.amountInStock != 0 && counter < maxLimit) {
+          const grid = calcGrid(rustServerInfo, vending.x, vending.y)
+
           rustplus.sendTeamMessage(
-            `(${vending.amountInStock} in stock) ${vending.quantity} :${vending.itemShortName}: for ${vending.costPerItem}:${vending.currencyShortName}:`
+            `(${vending.amountInStock} in stock) ${vending.quantity} :${vending.itemShortName}: for ${vending.costPerItem}:${vending.currencyShortName}: at ${grid}`
           )
           counter += 1
         }
       })
     } else {
-      rustplus.sendTeamMessage('Kurwa naucz się pisać')
+      rustplus.sendTeamMessage('Miss spelled or no offers')
     }
   }
 
@@ -121,47 +125,8 @@ function chatHandler(rustplus, msg, rustServerInfo, rustServerTime, mapInfo) {
         }
       })
     } else {
-      rustplus.sendTeamMessage('Kurwa naucz się pisać')
+      rustplus.sendTeamMessage('Miss spelled or no offers')
     }
-  }
-
-  if (message.includes('.fagata')) {
-    rustplus.sendTeamMessage(
-      'Ja jestem Fagata, sexy cipka spod Konia (Aha) Dupa taka duża, że jej szkoda nie wypinać (Aha)'
-    )
-    rustplus.sendTeamMessage(
-      'Jak nie masz sześciu zer na koncie, nawet nie podbijaj (Aha) Dziś loty private jetem, kiedyś luksus to był Freenow (Aha)'
-    )
-    rustplus.sendTeamMessage(
-      'Ej, dziś wakacje w LA, kiedyś było to moje marzenie (Aha) Wszędzie gdzie nie wejdę to robię wrażenie (Haha)'
-    )
-    rustplus.sendTeamMessage('Powiększyłam dupę jak zrobiłam karierę (Ups)')
-    rustplus.sendTeamMessage('Bolą plecy mnie, no bo mam za duże obciążenie')
-    rustplus.sendTeamMessage('Mój ex, dziwka, jebać typa (Kurwa)')
-    rustplus.sendTeamMessage('Mógł pić Coca-Colę, a została Hoop – cytryna')
-    rustplus.sendTeamMessage('Nie wrócę do byłego, może pomarzyć chyba')
-    rustplus.sendTeamMessage('Nawet jego matka, go kiedyś zostawiła (Haha)')
-  }
-
-  if (message === '2137') {
-    rustplus.sendTeamMessage(
-      'Pope John Paul II was head of the Catholic Church and sovereign of the Vatican City State from 1978 until his death in 2005.'
-    )
-    rustplus.sendTeamMessage(
-      'In his youth, Wojtyła dabbled in stage acting. He graduated with excellent grades from an all-boys high school in Wadowice,'
-    )
-    rustplus.sendTeamMessage(
-      'Poland, in 1938, soon after which World War II broke out. During the war, to avoid being kidnapped and sent off to a German '
-    )
-    rustplus.sendTeamMessage(
-      'slave labor camp, he signed up for work in harsh conditions in a quarry.Wojtyła eventually took up acting and developed a love for the profession and participated at a local theater.'
-    )
-    rustplus.sendTeamMessage(
-      'for the profession and participated at a local theater. The linguistically skilled Wojtyła wanted to study Polish at university.'
-    )
-    rustplus.sendTeamMessage(
-      'Encouraged by a conversation with Adam Stefan Sapieha, he decided to study theology and become a priest.'
-    )
   }
 }
 

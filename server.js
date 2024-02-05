@@ -7,9 +7,9 @@ const express = require('express')
 const RustPlus = require('@liamcottle/rustplus.js')
 const { translate } = require('google-translate-api-browser')
 
-const { Client, Events, GatewayIntentBits } = require('discord.js')
-const { token } = require('./connection-files/config.json')
-const client = new Client({ intents: [GatewayIntentBits.Guilds] })
+// const { Client, Events, GatewayIntentBits } = require('discord.js')
+// const { token } = require('./connection-files/config.json')
+// const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 
 const config = require('./connection-files/rustplus.config.json')
 const serverAnswer = require('./connection-files/server-answer.json')
@@ -22,12 +22,12 @@ app.listen(PORT, () =>
   console.log(colors.brightGreen(`server started on port ${PORT}`))
 )
 
-client.once(Events.ClientReady, (readyClient) => {
-  console.log(`Ready! Logged in as ${readyClient.user.tag}`)
-})
+// client.once(Events.ClientReady, (readyClient) => {
+//   console.log(`Ready! Logged in as ${readyClient.user.tag}`)
+// })
 
-// Log in to Discord with your client's token
-client.login(token)
+// // Log in to Discord with your client's token
+// client.login(token)
 
 const { chatHandler } = require('./modules/chatHandler')
 const { vend } = require('./modules/vend')
@@ -65,18 +65,15 @@ rustplus.on('connected', () => {
       fs.readFileSync('./rust-json-info/rust-server-time.json')
     ).response
 
-    teamInfo = JSON.parse(fs.readFileSync('./rust-json-info/team-info.json'))
-      .response.teamInfo
-
     mapInfo = JSON.parse(fs.readFileSync('./rust-json-info/map-info.json'))
       .response.mapMarkers
+
+    teamInfo = JSON.parse(fs.readFileSync('./rust-json-info/team-info.json'))
+      .response.teamInfo
 
     console.log(colors.brightBlue('server running'))
   }, 3000)
 })
-
-mapInfo = JSON.parse(fs.readFileSync('./rust-json-info/map-info.json')).response
-  .mapMarkers
 
 rustplus.on('message', (msg) => {
   if (msg.hasOwnProperty('broadcast')) {
