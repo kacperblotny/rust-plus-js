@@ -16,7 +16,11 @@ function calcGrid(rustServerInfo, x, y) {
       String.fromCharCode('A'.charCodeAt(0) + gridX) + Math.floor(grids - gridY)
   }
 
-  return gridLabel
+  const gird = {
+    grid: gridLabel,
+  }
+
+  return gird
 }
 
 module.exports = { calcGrid }

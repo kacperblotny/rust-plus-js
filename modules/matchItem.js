@@ -1,6 +1,6 @@
 const dataRustItems = require('../data/rust-items.json')
 
-function matchItem(sellOrder, vendgingLocation) {
+function matchItem(sellOrder) {
   const itemShort = dataRustItems.find(
     (matchItem) => matchItem['data-itemId'] === sellOrder.itemId
   )
@@ -17,6 +17,7 @@ function matchItem(sellOrder, vendgingLocation) {
     currencyShortName: currency['data-shortname'],
     currencyLongName: currency['data-name'],
   }
+
   return shortNames
 }
 

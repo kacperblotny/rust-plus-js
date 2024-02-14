@@ -1,34 +1,13 @@
 const Long = require('long')
 const fs = require('fs')
+
+// Import external modules
 const colors = require('colors/safe')
+const { translate } = require('google-translate-api-browser')
 
 const express = require('express')
 
-const RustPlus = require('@liamcottle/rustplus.js')
-const { translate } = require('google-translate-api-browser')
-
-// const { Client, Events, GatewayIntentBits } = require('discord.js')
-// const { token } = require('./connection-files/config.json')
-// const client = new Client({ intents: [GatewayIntentBits.Guilds] })
-
-const config = require('./connection-files/rustplus.config.json')
-const serverAnswer = require('./connection-files/server-answer.json')
-
-const app = express()
-const PORT = process.env.PORT || 5002
-
-app.get('/', (req, res) => res.send('api running'))
-app.listen(PORT, () =>
-  console.log(colors.brightGreen(`server started on port ${PORT}`))
-)
-
-// client.once(Events.ClientReady, (readyClient) => {
-//   console.log(`Ready! Logged in as ${readyClient.user.tag}`)
-// })
-
-// // Log in to Discord with your client's token
-// client.login(token)
-
+// Import modules
 const { chatHandler } = require('./modules/chatHandler')
 const { vend } = require('./modules/vend')
 const { getMap } = require('./modules/getMap')
@@ -36,17 +15,60 @@ const { getTeamInfo } = require('./modules/getTeamInfo')
 const { getRustServerInfo } = require('./modules/getRustServerInfo')
 const { getRustServerTime } = require('./modules/getRustServerTime')
 
-let rustServerInfo
-let rustServerTime
-let mapInfo
-let teamInfo
+// Initialize rustplusjs and discordjs
+const config = require('./connection-files/rustplus.config.json')
+const serverAnswer = require('./connection-files/server-answer.json')
 
+const RustPlus = require('@liamcottle/rustplus.js')
 const rustplus = new RustPlus(
   serverAnswer.ip,
   serverAnswer.port,
   serverAnswer.playerId,
   serverAnswer.playerToken
 )
+
+const { token } = require('./connection-files/config.json')
+
+const { Client, GatewayIntentBits } = require('discord.js')
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+})
+
+// Initialize express
+const app = express()
+const PORT = process.env.PORT || 5002
+
+//  Set default route
+app.get('/', (req, res) => res.send('api running'))
+app.listen(PORT, () =>
+  console.log(colors.brightGreen(`server started on port ${PORT}`))
+)
+
+// Discord bot connection
+client.once('ready', () => {
+  console.log(`Ready! Logged in as ${client.user.tag}`)
+
+  const channelId = '1204125775515746324'
+  const channel = client.channels.cache.get(channelId)
+
+  if (channel) {
+    channel.send('Server running')
+  } else {
+    console.error(`Channel with ID ${channelId} not found.`)
+  }
+})
+
+client.login(token)
+
+// Initialize rustplus global variables
+let rustServerInfo
+let rustServerTime
+let mapInfo
+let teamInfo
 
 rustplus.on('connected', () => {
   console.log(colors.brightGreen('connected to app'))
@@ -78,7 +100,14 @@ rustplus.on('connected', () => {
 rustplus.on('message', (msg) => {
   if (msg.hasOwnProperty('broadcast')) {
     if (msg.broadcast.hasOwnProperty('teamMessage')) {
-      chatHandler(rustplus, msg, rustServerInfo, rustServerTime, mapInfo)
+      chatHandler(
+        rustplus,
+        msg,
+        rustServerInfo,
+        rustServerTime,
+        mapInfo,
+        client
+      )
     }
   }
 })
