@@ -95,6 +95,17 @@ rustplus.on('connected', () => {
 
     console.log(colors.brightBlue('server running'))
   }, 3000)
+
+  // rustplus.getEntityInfo(1782934631, (message) => {
+  //   console.log('getEntityInfo response message: ' + JSON.stringify(message))
+  //   return true
+  // })
+
+  // rustplus.getEntityInfo(1634088408, (message) => {
+  // console.log('getEntityInfo response message: ' + JSON.stringify(message))
+  // console.log(message.response.entityInfo.payload)
+  //   return true
+  // })
 })
 
 rustplus.on('message', (msg) => {
@@ -111,6 +122,22 @@ rustplus.on('message', (msg) => {
     }
   }
 })
+
+// rustplus.on('message', (message) => {
+//   if (message.broadcast && message.broadcast.entityChanged) {
+//     var entityChanged = message.broadcast.entityChanged
+
+//     var entityId = entityChanged.entityId
+//     var value = entityChanged.payload.value
+
+//     console.log(
+//       'entity ' +
+//         colors.blue(entityId) +
+//         ' is now ' +
+//         (value ? colors.green('active') : colors.red('inactive'))
+//     )
+//   }
+// })
 
 rustplus.on('error', (err) => {
   console.log(err)

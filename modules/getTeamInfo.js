@@ -11,7 +11,7 @@ function getTeamInfo(rustplus) {
           console.error(colors.red('Error saving team info:'), err)
         } else {
           //   members = info.response.teamInfo.members
-          console.log(colors.brightBlue('team info saved to team-info.json'))
+          // console.log(colors.brightBlue('team info saved to team-info.json'))
         }
       }
     )
